@@ -1,0 +1,31 @@
+﻿@model List<Boxy.Domain.Entities.Product>
+
+
+
+<div class="container">
+    <div class="row">
+        @foreach (var a in Model)
+        {
+            <div class="col-md-4">
+                <div class="img">
+                    @{
+                        if (a.Image != null)
+                        {
+                            @Html.Raw("<img src=\"data:image/jpeg;base64," + Convert.ToBase64String(a.Image) + "\" alt=\" \">")
+                        }
+                        else
+                        {
+                            <i class="fa fa-exclamation-triangle" title="Нет изображения"></i>
+                        }
+                    }
+                </div>
+                <div class="desc">
+                    <p>@a.Description</p>
+                </div>
+                <div class="price">
+                    <p>@a.Price</p>
+                </div>
+            </div>
+        }
+    </div>
+</div>

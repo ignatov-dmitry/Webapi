@@ -1,0 +1,29 @@
+﻿@model List<Boxy.Domain.Entities.Category>
+
+@{
+    Layout = null;
+}
+
+<p class="u-text-mute u-mb-small">@ViewBag.error</p>
+@foreach (var i in Model)
+{
+    <p class="u-text-mute u-mb-small">@i.Name</p>
+}
+
+@using (Html.BeginForm())
+{
+    <div class="row">
+        <div class="col u-mb-medium">
+            <button type="submit" class="c-btn c-btn--danger">
+                <i class="fa fa-trash-o u-mr-xsmall"></i>
+                Удалить
+            </button>
+        </div>
+        <div class="col u-mb-medium">
+            <button type="submit" class="c-btn c-btn--warning c-btn--fullwidth" data-dismiss="modal">
+                Отмена
+            </button>
+        </div>
+    </div>
+
+}

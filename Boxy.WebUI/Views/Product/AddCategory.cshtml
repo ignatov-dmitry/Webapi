@@ -1,0 +1,119 @@
+﻿@model PagedList.IPagedList<Boxy.Domain.Entities.Category>
+@using PagedList.Mvc;
+@using Boxy.Domain.Entities
+@using Boxy.BPM;
+
+@{
+    ViewBag.Title = "Добавить категорию";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Добавить категорию товара</h2>
+<div class="row u-mb-small">
+
+    <div class="offset-2 col-md-8">
+        @using (Html.BeginForm("AddCategory", "Product", FormMethod.Post))
+        {
+            <label class="c-field__label" for="input17">Название категории</label>
+            <div class="c-field u-mb-small">
+                @Html.TextBox("Name", "", new { @class = "c-input", @placeholder = "Название категории" })
+            </div>
+
+            <label class="c-field__label" for="input17">Родительская категория</label>
+            <div class="c-field u-mb-small">
+                @Html.DropDownList("ParentId", ViewBag.Category as SelectList, new { @class = "c-select" })
+            </div>
+
+            <button type="submit" class="c-btn c-btn--success c-btn--fullwidth">Сохранить</button>
+        }
+    </div>
+</div>
+
+
+@using (Ajax.BeginForm("DeleteCategories", new AjaxOptions { Url = "/Product/DeleteCategories", HttpMethod = "GET", UpdateTargetId = "content", LoadingElementId = "loading" }))
+{
+    <div class="row u-mb-large">
+        <div class="col-sm-12">
+            <table class="c-table u-mb-small">
+
+                <caption class="c-table__title">
+                    Количество категорий <small>@ViewBag.count шт.</small>
+
+                    <a class="c-table__title-action" href="#!">
+                        <i class="fa fa-cloud-download"></i>
+                    </a>
+                </caption>
+
+                <thead class="c-table__head c-table__head--slim">
+                    <tr class="c-table__row">
+                        <th class="c-table__cell c-table__cell--head"><input type="checkbox" id="allCheked" /></th>
+                        <th class="c-table__cell c-table__cell--head">Название категории</th>
+                        <th class="c-table__cell c-table__cell--head">Родительская категория</th>
+                        <th class="c-table__cell c-table__cell--head">Alias</th>
+                        <th class="c-table__cell c-table__cell--head">Действия</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+
+
+                    @foreach (var a in Model)
+                    {
+                        <tr class="c-table__row">
+                            <td class="c-table__cell">
+                                <input type="checkbox" name="id" id="id" class="id" value="@a.Id" />
+                            </td>
+
+                            <td class="c-table__cell">@a.Name</td>
+
+                            <td class="c-table__cell">
+                                @Functions.GetParent(a.ParentId)
+                            </td>
+
+                            <td class="c-table__cell">
+                                @a.Alias
+                            </td>
+                            <td class="c-table__cell u-text-center">
+                                <div class="c-dropdown dropdown">
+                                    <button class="c-btn c-btn--secondary has-dropdown dropdown-toggle" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Выбрать</button>
+
+                                    <div class="c-dropdown__menu dropdown-menu" aria-labelledby="dropdownMenuButton2">
+                                        <a class="c-dropdown__item dropdown-item" href="#">Просмотр</a>
+                                        <a class="c-dropdown__item dropdown-item" href="@Url.Action("EditCategory", "Product", new { id = a.Id })">Редактировать</a>
+                                        <a class="c-dropdown__item dropdown-item" id="delete" data-toggle="modal" data-target="#DeleteModal" href="@Url.Action("DeleteCategory", "Product", new { id = a.Id })">Удалить</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                    <tr class="c-table__row">
+                        <td class="c-table__cell">
+                            <div class="c-dropdown dropdown">
+                                <button class="c-btn c-btn--secondary has-dropdown dropdown-toggle" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Выбрать</button>
+
+                                <div class="c-dropdown__menu dropdown-menu" aria-labelledby="dropdownMenuButton2">
+                                    <a class="c-dropdown__item dropdown-item" id="DeleteProducts">Удалить</a>
+                                    <a id="sendForm" data-toggle="modal" data-target="#DeleteModal" href="#" style="display:none"></a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+}
+Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount
+<nav class="c-pagination u-justify-center">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }), new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded })
+</nav>
+<div class="c-modal modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="DeleteModal" style="display: none;" aria-hidden="true">
+    <div class="c-modal__dialog modal-dialog" role="document">
+        <div class="modal-content">
+            <div id="content" class="c-card u-p-medium u-mh-auto" style="max-width:500px;">
+
+            </div>
+        </div>
+    </div>
+</div>

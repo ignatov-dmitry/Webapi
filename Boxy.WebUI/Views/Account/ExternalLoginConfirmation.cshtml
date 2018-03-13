@@ -1,0 +1,33 @@
+﻿@model Boxy.WebUI.Models.ExternalLoginConfirmationViewModel
+@{
+    ViewBag.Title = "Регистрация";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>Связывание вашей учетной записи @ViewBag.LoginProvider.</h3>
+
+@using (Html.BeginForm("ExternalLoginConfirmation", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "c-login__content", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+
+    <h4>Форма связи</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <p class="u-mb-medium">
+        Вы успешно прошли проверку подлинности через <strong>@ViewBag.LoginProvider</strong>
+            Введите имя пользователя на этом сайте ниже и нажмите кнопку "Зарегистрировать", чтобы завершить
+            вход.
+    </p>
+    <div class="c-field u-mb-small">
+        @Html.LabelFor(m => m.Email, new { @class = "c-field__label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Email, new { @class = "c-input" })
+            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="c-btn c-btn--info c-btn--fullwidth" value="Регистрация" />
+        </div>
+    </div>
+}
+

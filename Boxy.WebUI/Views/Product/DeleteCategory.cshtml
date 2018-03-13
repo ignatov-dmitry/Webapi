@@ -1,0 +1,27 @@
+﻿@model Boxy.Domain.Entities.Category
+
+@{
+    Layout = null;
+}
+
+<h3>Удаление категории</h3>
+<p class="u-text-mute u-mb-small">Вы уверены что хотите удалить категорию @Html.DisplayFor(a => a.Name)</p>
+
+
+@using (Html.BeginForm())
+{
+    <div class="row">
+        <div class="col u-mb-medium">
+            <button type="submit" class="c-btn c-btn--danger">
+                <i class="fa fa-trash-o u-mr-xsmall"></i>
+                Удалить
+            </button>
+        </div>
+        <div class="col u-mb-medium">
+            <button type="submit" class="c-btn c-btn--warning c-btn--fullwidth" data-dismiss="modal">
+                Отмена
+            </button>
+        </div>
+    </div>
+
+}

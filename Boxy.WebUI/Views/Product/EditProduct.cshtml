@@ -1,0 +1,37 @@
+﻿@model Boxy.Domain.Entities.Product
+
+@{
+    ViewBag.Title = "Редактировать услугу(товар)";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Добавить товар</h2>
+<div class="row">
+    <div class="offset-2 col-md-8">
+        @using (Html.BeginForm("EditProduct", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.HiddenFor(a=>a.Id)
+            @Html.HiddenFor(a=>a.Alias)
+            <div class="c-field u-mb-small">
+                @Html.TextBoxFor(a => a.Name, new { @class = "c-input", @placeholder = "Название товара" })
+            </div>
+            <div class="c-field u-mb-small">
+                @Html.TextAreaFor(a => a.Description, new { @class = "c-input", @placeholder = "Описание товара" })
+            </div>
+            <div class="c-field u-mb-small">
+                @Html.DropDownListFor(a => a.CategoryId, ViewBag.Category as SelectList, new { @class = "c-select" })
+            </div>
+            <div class="c-field u-mb-small">
+                @Html.TextBoxFor(a => a.Price, new { @class = "c-input", @placeholder = "Цена" })
+            </div>
+            <div class="c-field u-mb-small">
+                @Html.TextBoxFor(a => a.Count, new { @class = "c-input", @placeholder = "Количество" })
+            </div>
+
+            <div class="fallback u-mb-small">
+                <p class="u-text-mute u-text-uppercase u-mb-medium">Загрузить файл</p>
+                <input class="c-input" id="Image" name="uploadImage" type="file">
+            </div>
+            <button type="submit" class="c-btn c-btn--success c-btn--fullwidth">Сохранить</button>
+        }
+    </div>
+</div>

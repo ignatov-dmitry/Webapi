@@ -1,0 +1,50 @@
+﻿@model IEnumerable<Boxy.Domain.Entities.Product>
+@using Boxy.Domain.Entities
+@using Boxy.BPM
+
+@using (ApplicationDbContext db = new ApplicationDbContext())
+{
+    <div class="navbar navbar-inverse">
+        @Html.Partial("Menu", db.Categories.ToList())
+    </div>
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-10">
+            @foreach (var item in Model)
+            {
+
+                <div class="col-md-4 well">
+                    <img src="@Html.DisplayFor(modelItem=>item.Files.FirstOrDefault().Path)" alt="@Html.DisplayFor(modelItem=>item.Files.FirstOrDefault().Alt)" title="@Html.DisplayFor(modelItem=>item.Files.FirstOrDefault().Title)" class="img-rounded">
+                    <h3>
+                        <strong>@Html.DisplayFor(modelItem => item.Name)</strong>
+                        <span class="pull-right ui-controlgroup-label label-primary">@Html.DisplayFor(modelItem => item.Price) руб.</span>
+                    </h3>
+                    <span class="lead">@Html.DisplayFor(modelItem => item.Description)</span>
+                    <a href="/GetProduct?id=@item.Id" class="viewProduct">Перейти</a>
+                </div>
+            }
+        </div>
+
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.category').on('click', function (e) {
+            var link = $(this).prop('href');
+            var params = link.split('?');
+        });
+        $('.viewProduct').on('click', function (e) {
+            debugger;
+            e.preventDefault();
+            var link = $(this).prop('href');
+            var params = link.split('/');
+            var count = params.length;
+            link = params[count - 1];
+            return location.href = "/" + link;
+        });
+    });
+</script>

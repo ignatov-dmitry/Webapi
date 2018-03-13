@@ -1,0 +1,35 @@
+﻿@model Boxy.Domain.Entities.Product
+
+@{
+    ViewBag.Title = "Добавить услугу(товар)";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Добавить товар</h2>
+<div class="row">
+    <div class="offset-2 col-md-8">
+        @using (Html.BeginForm("Add", "Product", FormMethod.Post, new { enctype = "multipart/form-data", @id="send-product" }))
+    {
+        <div class="c-field u-mb-small">
+            @Html.TextBoxFor(a => a.Name, new { @class = "c-input", @placeholder = "Название товара" })
+        </div>
+        <div class="c-field u-mb-small">
+            @Html.TextAreaFor(a => a.Description, new { @class = "c-input", @placeholder = "Описание товара" })
+        </div>
+        <div class="c-field u-mb-small">
+            @Html.DropDownListFor(a => a.CategoryId, ViewBag.Category as SelectList, new { @class = "c-select" })
+        </div>
+        <div class="c-field u-mb-small">
+            @Html.TextBoxFor(a => a.Price, new { @class = "c-input", @placeholder = "Цена" })
+        </div>
+        <div class="c-field u-mb-small">
+            @Html.TextBoxFor(a => a.Count, new { @class = "c-input", @placeholder = "Количество" })
+        </div>
+        <div class="c-field u-mb-small">
+            <input name="Files" type="file" multiple>
+        </div>
+
+        <button type="submit" class="c-btn c-btn--success c-btn--fullwidth">Сохранить</button>
+}
+    </div>
+</div>
+

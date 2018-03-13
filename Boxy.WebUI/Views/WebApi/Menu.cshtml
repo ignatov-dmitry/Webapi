@@ -1,0 +1,6 @@
+﻿@model List<Boxy.Domain.Entities.Category>
+
+@foreach(var link in Model)
+{
+    <a href="?GetCategoryProducts=@link.Id" class="navbar-brand category">@link.Name</a>
+}

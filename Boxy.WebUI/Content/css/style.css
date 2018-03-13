@@ -1,0 +1,22 @@
+﻿.product-image {
+    width: 100px;
+    height: 100px;
+}
+.product-image img {
+    width: 100%;
+}
+
+.product-image i {
+    color: #da932c;
+    font-size: 100px;
+}
+
+#Vkontakte {
+    border: none;
+    background: #4a76a8;
+}
+
+#Google {
+    border:none;
+    background: #dd4f43;
+}

@@ -1,0 +1,192 @@
+﻿
+<!doctype html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>@ViewBag.Title</title>
+    <meta name="description" content="Dashboard UI Kit">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,600" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="shortcut icon" href="~/Content/favicon.ico" type="image/x-icon">
+    <link href="~/Content/css/main.min.css?v=1.4" rel="stylesheet" />
+    <link href="~/Content/css/style.css" rel="stylesheet" />
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />
+</head>
+<body class="o-page">
+    <!--[if lte IE 9]>
+        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+    <![endif]-->
+
+    <div class="o-page__sidebar js-page-sidebar">
+        <div class="c-sidebar">
+            <a class="c-sidebar__brand" href="#">
+                <img class="c-sidebar__brand-img" src="~/Content/img/logo.png" alt="Logo"> Dashboard
+            </a>
+
+            <h4 class="c-sidebar__title">Dashboards</h4>
+            <ul class="c-sidebar__list">
+
+                <li class="c-sidebar__item">
+                    <a class="c-sidebar__link is-active" href="@Url.Action("Index", "Admin")">
+                        <i class="fa fa-home u-mr-xsmall"></i>Главная
+                    </a>
+                </li>
+                <li class="c-sidebar__item has-submenu">
+                    <a class="c-sidebar__link" data-toggle="collapse" href="#sidebar-submenu" aria-expanded="false" aria-controls="sidebar-submenu">
+                        <i class="fa fa-caret-square-o-down u-mr-xsmall"></i>Услуги
+                    </a>
+                    <ul class="c-sidebar__submenu collapse" id="sidebar-submenu">
+                        <li><a class="c-sidebar__link" href="@Url.Action("Index", "Product")">Услуги(товары)</a></li>
+                        <li><a class="c-sidebar__link" href="@Url.Action("Add", "Product")">Добавить услугу(товар)</a></li>
+                        <li><a class="c-sidebar__link" href="@Url.Action("AddCategory", "Product")">Добавить категорию</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <main class="o-page__content">
+        <header class="c-navbar u-mb-medium">
+            <button class="c-sidebar-toggle u-mr-small">
+                <span class="c-sidebar-toggle__bar"></span>
+                <span class="c-sidebar-toggle__bar"></span>
+                <span class="c-sidebar-toggle__bar"></span>
+            </button><!-- // .c-sidebar-toggle -->
+
+            <h2 class="c-navbar__title u-mr-auto">Account</h2>
+
+            <div class="c-dropdown u-hidden-down@mobile">
+                <a class="c-notification dropdown-toggle" href="#" id="dropdownMenuUser" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="c-notification__icon">
+                        <i class="fa fa-user-o"></i>
+                    </span>
+                    <span class="c-notification__number">3</span>
+                </a>
+
+                <div class="c-dropdown__menu c-dropdown__menu--large dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuUser">
+                    <a href="#" class="c-dropdown__item dropdown-item o-media">
+                        <span class="o-media__img u-mr-xsmall">
+                            <span class="c-avatar c-avatar--xsmall">
+                                <img class="c-avatar__img" src="~/Content/img/avatar2-72.jpg" alt="User's Profile Picture">
+                            </span>
+                        </span>
+                        <div class="o-media__body">
+                            <h6 class="u-mb-zero">Someone mentioned you</h6>
+                            <p class="u-text-mute">You have recieved a mention on twitter, check it out!</p>
+                        </div>
+                    </a>
+                    <a href="#" class="c-dropdown__item dropdown-item o-media">
+                        <span class="o-media__img u-mr-xsmall">
+                            <span class="c-avatar c-avatar--xsmall">
+                                <img class="c-avatar__img" src="~/Content/img/avatar3-72.jpg" alt="User's Profile Picture">
+                            </span>
+                        </span>
+                        <div class="o-media__body">
+                            <h6 class="u-mb-zero">Recieved a Payment</h6>
+                            <p class="u-text-mute">You have recieved a mention on twitter, check it out!</p>
+                        </div>
+                    </a>
+                    <a href="#" class="c-dropdown__item dropdown-item o-media">
+                        <span class="o-media__img u-mr-xsmall">
+                            <span class="c-avatar c-avatar--xsmall">
+                                <img class="c-avatar__img" src="~/Content/img/avatar4-72.jpg" alt="User's Profile Picture">
+                            </span>
+                        </span>
+                        <div class="o-media__body">
+                            <h6 class="u-mb-zero">You got a promotion</h6>
+                            <p class="u-text-mute">You have recieved a mention on twitter, check it out!</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="c-dropdown dropdown u-mr-medium u-ml-small u-hidden-down@mobile">
+                <a class="c-notification dropdown-toggle" href="#" id="dropdownMenuAlerts" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="c-notification__icon">
+                        <i class="fa fa-bell-o"></i>
+                    </span>
+                    <span class="c-notification__number">3</span>
+                </a>
+
+                <div class="c-dropdown__menu c-dropdown__menu--large dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuAlerts">
+                    <a href="#" class="c-dropdown__item dropdown-item o-media">
+                        <span class="o-media__img u-mr-xsmall">
+                            <span class="c-avatar c-avatar--xsmall">
+                                <span class="c-avatar__img u-bg-success u-flex u-justify-center u-align-items-center">
+                                    <i class="fa fa-check u-text-large u-color-white"></i>
+                                </span>
+                            </span>
+
+                        </span>
+                        <div class="o-media__body">
+                            <h6 class="u-mb-zero">Completed a task</h6>
+                            <p class="u-text-mute">You have recieved a mention on twitter, check it out!</p>
+                        </div>
+                    </a>
+
+                    <a href="#" class="c-dropdown__item dropdown-item o-media">
+                        <span class="o-media__img u-mr-xsmall">
+                            <span class="c-avatar c-avatar--xsmall">
+                                <span class="c-avatar__img u-bg-fancy u-flex u-justify-center u-align-items-center">
+                                    <i class="fa fa-calendar u-text-large u-color-white"></i>
+                                </span>
+                            </span>
+
+                        </span>
+                        <div class="o-media__body">
+                            <h6 class="u-mb-zero">Company meetup</h6>
+                            <p class="u-text-mute">You have recieved a mention on twitter, check it out!</p>
+                        </div>
+                    </a>
+                    <a href="#" class="c-dropdown__item dropdown-item o-media">
+                        <span class="o-media__img u-mr-xsmall">
+                            <span class="c-avatar c-avatar--xsmall">
+                                <span class="c-avatar__img u-bg-primary u-flex u-justify-center u-align-items-center">
+                                    <i class="fa fa-info u-text-large u-color-white"></i>
+                                </span>
+                            </span>
+
+                        </span>
+                        <div class="o-media__body">
+                            <h6 class="u-mb-zero">Someone mentioned you</h6>
+                            <p class="u-text-mute">You have recieved a mention on twitter, check it out!</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="c-dropdown dropdown">
+                <a class="c-avatar c-avatar--xsmall has-dropdown dropdown-toggle" href="#" id="dropdwonMenuAvatar" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img class="c-avatar__img" src="~/Content/img/avatar-72.jpg" alt="User's Profile Picture">
+                </a>
+
+                <div class="c-dropdown__menu dropdown-menu dropdown-menu-right" aria-labelledby="dropdwonMenuAvatar">
+                    <a class="c-dropdown__item dropdown-item" href="#">Edit Profile</a>
+                    <a class="c-dropdown__item dropdown-item" href="#">View Activity</a>
+                    @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { @id="Exit" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <a class="c-dropdown__item dropdown-item" id="LogOff">Выйти</a>
+                    }
+                </div>
+            </div>
+        </header>
+
+        <div class="container-fluid" id="dynamic-content">
+            @RenderBody()
+        </div>
+
+    </main>
+
+    <script src="~/Scripts/main.min.js?v=1.4"></script>
+    <script src="~/Scripts/Script.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.1.js"></script>
+</body>
+</html>

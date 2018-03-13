@@ -1,0 +1,172 @@
+﻿@model PagedList.IPagedList<Boxy.Domain.Entities.Product>
+@using PagedList.Mvc;
+@using Boxy.Domain.Entities;
+@using Boxy.BPM;
+@{
+    ViewBag.Title = "Список товаров";
+}
+<div class="row">
+    <div class="col-sm-6 col-lg-3">
+        <div class="c-state">
+            <h3 class="c-state__title">New Projects</h3>
+            <h4 class="c-state__number">94</h4>
+            <p class="c-state__status">13% Increase</p>
+            <span class="c-state__indicator">
+                <i class="fa fa-arrow-circle-o-down"></i>
+            </span>
+        </div><!-- // c-state -->
+    </div>
+
+    <div class="col-sm-6 col-lg-3">
+        <div class="c-state c-state--success">
+            <h3 class="c-state__title">Team Members</h3>
+            <h4 class="c-state__number">5,990</h4>
+            <p class="c-state__status">4% Increase</p>
+            <span class="c-state__indicator">
+                <i class="fa fa-arrow-circle-o-up"></i>
+            </span>
+        </div><!-- // c-state -->
+    </div>
+
+    <div class="col-sm-6 col-lg-3">
+        <div class="c-state c-state--warning">
+            <h3 class="c-state__title">Total Budget</h3>
+            <h4 class="c-state__number">$80,890</h4>
+            <p class="c-state__status">21% Decrease</p>
+            <span class="c-state__indicator">
+                <i class="fa fa-arrow-circle-o-down"></i>
+            </span>
+        </div><!-- // c-state -->
+    </div>
+
+    <div class="col-sm-6 col-lg-3">
+        <div class="c-state c-state--danger">
+            <h3 class="c-state__title">New Customers</h3>
+            <h4 class="c-state__number">3</h4>
+            <p class="c-state__status">13% Decrease</p>
+            <span class="c-state__indicator">
+                <i class="fa fa-arrow-circle-o-up"></i>
+            </span>
+        </div><!-- // c-state -->
+    </div>
+</div><!-- // .row -->
+
+<div class="c-field u-mb-medium">
+    <label class="c-field__label" for="select2">Поиск по товарам</label>
+    <input name="name" class="c-input search" onkeyup="submitSearch();" data-autocomplete-source='@Url.Action("AutocompleteSearch", "Product")'>
+</div>
+
+@using (Ajax.BeginForm("DeleteProducts", new AjaxOptions { Url = "/Product/DeleteProducts", HttpMethod = "GET", UpdateTargetId = "content", LoadingElementId = "loading" }))
+{
+    <div class="row u-mb-large">
+        <div class="col-sm-12">
+            <table class="c-table u-mb-small">
+
+                <caption class="c-table__title">
+                    Список товаров <small>@ViewBag.count шт.</small>
+
+                    <a class="c-table__title-action" href="#!">
+                        <i class="fa fa-cloud-download"></i>
+                    </a>
+                </caption>
+                <thead class="c-table__head c-table__head--slim">
+                    <tr class="c-table__row">
+                        <th class="c-table__cell c-table__cell--head"><input type="checkbox" id="allCheked" /></th>
+                        <th class="c-table__cell c-table__cell--head">Картинка</th>
+                        <th class="c-table__cell c-table__cell--head">Название</th>
+                        <th class="c-table__cell c-table__cell--head">Категория</th>
+                        <th class="c-table__cell c-table__cell--head">Цена</th>
+                        <th class="c-table__cell c-table__cell--head">Количество на складе</th>
+                        <th class="c-table__cell c-table__cell--head">Alias</th>
+                        <th class="c-table__cell c-table__cell--head u-text-center">Действия</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var a in Model)
+                    {
+                        <tr class="c-table__row">
+                            <td class="c-table__cell">
+                                <input type="checkbox" name="id" id="id" class="id" value="@a.Id" />
+                            </td>
+
+                            <td class="c-table__cell">
+                                <div class="o-media">
+                                    <div class="o-media__img u-mr-xsmall">
+                                        <div class="product-image">
+                                            
+
+
+                                        </div>
+                                    </div>
+                                    <div class="o-media__body">
+
+                                    </div>
+                                </div>
+                            </td>
+
+                            <td class="c-table__cell">
+                                @a.Name
+                            </td>
+                            <td class="c-table__cell">
+                                @Functions.GetParent(a.CategoryId)
+                            </td>
+                            <td class="c-table__cell">
+                                @a.Price
+                            </td>
+
+                            <td class="c-table__cell">
+                                @a.Count шт.
+                            </td>
+
+                            <td class="c-table__cell">
+                                @a.Alias
+                            </td>
+
+                            <td class="c-table__cell u-text-center">
+                                <div class="c-dropdown dropdown">
+                                    <button class="c-btn c-btn--secondary has-dropdown dropdown-toggle" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Выбрать</button>
+
+                                    <div class="c-dropdown__menu dropdown-menu" aria-labelledby="dropdownMenuButton2">
+                                        <a class="c-dropdown__item dropdown-item" href="#">Просмотр</a>
+                                        <a class="c-dropdown__item dropdown-item" href="@Url.Action("EditProduct", "Product", new { id = a.Id })">Редактировать</a>
+                                        <a class="c-dropdown__item dropdown-item" id="delete" data-toggle="modal" data-target="#DeleteModal" href="@Url.Action("DeleteProduct", "Product", new { id = a.Id })">Удалить</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                    <tr class="c-table__row">
+                        <td class="c-table__cell">
+                            <div class="c-dropdown dropdown">
+                                <button class="c-btn c-btn--secondary has-dropdown dropdown-toggle" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Выбрать</button>
+
+                                <div class="c-dropdown__menu dropdown-menu" aria-labelledby="dropdownMenuButton2">
+                                    <a class="c-dropdown__item dropdown-item" id="DeleteProducts">Удалить</a>
+                                    <a id="sendForm" data-toggle="modal" data-target="#DeleteModal" href="#" style="display:none"></a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount
+<nav class="c-pagination u-justify-center">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }), new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded })
+</nav>
+
+
+
+<div class="c-modal modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="DeleteModal" style="display: none;" aria-hidden="true">
+    <div class="c-modal__dialog modal-dialog" role="document">
+        <div class="modal-content">
+            <div id="content" class="c-card u-p-medium u-mh-auto" style="max-width:500px;">
+
+            </div>
+        </div>
+    </div>
+</div>
